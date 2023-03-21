@@ -10,33 +10,23 @@ const textarea = document.querySelector('.feedback-form textarea');
 form.addEventListener('input', throttle(onFormInput, 500));
 form.addEventListener('submit', onFormSubmit);
 
-form.addEventListener('input', event => {
-  // console.log(event.target.name);
-  // console.log(event.target.value);
-  
-  formData[event.target.name] = event.target.value;
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
-  console.log(formData);
-});
-
 populateForm();
 
-function onFormSubmit(event) {
-  event.preventDefault();
-  // console.log('Відправляємо форму');
-  event.currentTarget.reset();
-  localStorage.removeItem(STORAGE_KEY);
-};
-
-function onFormInput(event) {
-  // const message = event.target.value;
-  // console.log(message);
+function onFormInput(evt) {
   formData = {
     email: input.value,
     message: textarea.value,
   };
 
   localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
+};
+
+function onFormSubmit(event) {
+  event.preventDefault();
+  event.currentTarget.reset();
+  localStorage.removeItem(STORAGE_KEY);
+  console.log(formData);
+  // console.log('Відправляємо форму');
 };
 
 function populateForm() {
